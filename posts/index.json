@@ -3,23 +3,43 @@
     {
       "id": "welcome",
       "title": "블로그를 시작하며 — 간호사에서 개발자까지",
-      "date": "2026-04-13",
-      "tags": ["회고", "커리어"],
+      "date": "2026-04-09",
+      "tags": [
+        "회고",
+        "커리어"
+      ],
       "file": "posts/welcome.md"
     },
     {
       "id": "flutter-webmobile",
       "title": "Flutter로 Web과 Mobile 동시 개발하기",
-      "date": "2026-04-01",
-      "tags": ["Flutter", "개발"],
+      "date": "2026-04-10",
+      "tags": [
+        "Flutter",
+        "개발"
+      ],
       "file": "posts/flutter-webmobile.md"
     },
     {
       "id": "esxi-optimization",
       "title": "ESXi VM 리소스 최적화로 4박5일을 1시간으로",
-      "date": "2026-03-15",
-      "tags": ["인프라", "ESXi", "최적화"],
+      "date": "2026-04-12",
+      "tags": [
+        "인프라",
+        "ESXi",
+        "최적화"
+      ],
       "file": "posts/esxi-optimization.md"
+    },
+    {
+      "id": "ai-agent",
+      "title": "AI 에이전트 활용기",
+      "date": "2026-04-13",
+      "tags": [
+        "AI",
+        "에이전트"
+      ],
+      "file": "posts/ai-agent.md"
     }
   ]
 }
