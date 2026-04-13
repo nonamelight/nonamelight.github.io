@@ -362,6 +362,43 @@ h1, h2, h3, h4, h5, h6 {
 .fade-in-delay-4 { animation-delay: 0.4s; opacity: 0; animation-fill-mode: forwards; }
 .fade-in-delay-5 { animation-delay: 0.5s; opacity: 0; animation-fill-mode: forwards; }
 
+/* ---- Scroll Hint ---- */
+.scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+  user-select: none;
+}
+.scroll-hint:hover { opacity: 1; }
+.scroll-hint-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.scroll-hint-arrow {
+  font-size: 0.9rem;
+  color: var(--accent-cyan);
+  animation: bounce-down 1.6s ease-in-out infinite;
+  display: block;
+  text-shadow: 0 0 10px var(--accent-cyan);
+}
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0);   opacity: 0.5; }
+  50%       { transform: translateY(7px); opacity: 1;   }
+}
+
 /* ---- Scroll Snap Wrapper ---- */
 .snap-wrapper {
   height: calc(100vh - var(--nav-height));
