@@ -1,0 +1,33 @@
+<div class="blog-page">
+  <!-- Hero -->
+  <div class="blog-hero">
+    <div class="container">
+      <span class="section-tag fade-in">Blog</span>
+      <h1 class="section-title fade-in-delay-1">기술 <span class="text-gradient">블로그</span></h1>
+      <p class="section-subtitle fade-in-delay-2">마크다운으로 작성하는 기술 포스팅</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="blog-layout">
+      <!-- Sidebar: Post List -->
+      <div class="blog-sidebar">
+        <div class="post-list" id="post-list">
+          <!-- JS로 동적 렌더링 -->
+          <div style="color: var(--text-muted); font-size: 0.875rem; padding: 20px 0;">
+            포스트를 불러오는 중...
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content: Markdown Viewer -->
+      <div class="blog-content" id="blog-content">
+        <div class="blog-empty-state" id="blog-empty">
+          <span class="blog-empty-icon">📝</span>
+          <p>왼쪽에서 포스트를 선택하세요</p>
+        </div>
+        <div class="markdown-body" id="markdown-body" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,345 @@
+/**
+ * main.js — 블로그 SPA 메인 진입점
+ * - SPA 라우터 (pages/*.html fetch & 교체)
+ * - 스크롤 스냅 닷 인디케이터
+ * - 네비게이션 (햄버거, 활성 링크)
+ * - 스킬 바 애니메이션 (Intersection Observer)
+ * - 블로그 마크다운 포스트 목록 & 렌더링
+ */
+
+(function () {
+  'use strict';
+
+  // =========================================================
+  // State
+  // =========================================================
+  const state = {
+    currentPage: 'home',
+    currentPostId: null,
+  };
+
+  // =========================================================
+  // DOM Refs
+  // =========================================================
+  const pageContainer = document.getElementById('page-container');
+  const navbar        = document.getElementById('navbar');
+  const hamburger     = document.getElementById('hamburger-btn');
+  const navLinks      = document.getElementById('nav-links');
+  const scrollIndicator = document.getElementById('scroll-indicator');
+  const pageLoader    = document.getElementById('page-loader');
+
+  // =========================================================
+  // Loader Utility
+  // =========================================================
+  function showLoader() { pageLoader.classList.add('active'); }
+  function hideLoader() { pageLoader.classList.remove('active'); }
+
+  // =========================================================
+  // SPA Router — fetch page HTML & inject
+  // =========================================================
+  async function navigate(pageName) {
+    if (pageName === state.currentPage) return;
+    showLoader();
+
+    try {
+      const response = await fetch(`pages/${pageName}.html`);
+      if (!response.ok) throw new Error(`Page not found: ${pageName}`);
+      const html = await response.text();
+
+      pageContainer.innerHTML = html;
+      state.currentPage = pageName;
+
+      // Update active nav link
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.toggle('active', link.dataset.page === pageName);
+      });
+
+      // Close mobile menu
+      navLinks.classList.remove('open');
+      hamburger.classList.remove('open');
+
+      // Page-specific init
+      afterNavigate(pageName);
+
+      // Scroll to top
+      window.scrollTo({ top: 0 });
+    } catch (err) {
+      pageContainer.innerHTML = `
+        <div style="min-height:80vh;display:flex;align-items:center;justify-content:center;color:var(--text-muted);">
+          <div style="text-align:center;">
+            <div style="font-size:3rem;margin-bottom:16px;">⚠️</div>
+            <p>페이지를 불러올 수 없습니다: ${pageName}</p>
+            <p style="font-size:0.875rem;margin-top:8px;">${err.message}</p>
+          </div>
+        </div>
+      `;
+    } finally {
+      setTimeout(hideLoader, 200);
+    }
+  }
+
+  // =========================================================
+  // After Navigate — per-page init hooks
+  // =========================================================
+  function afterNavigate(pageName) {
+    switch (pageName) {
+      case 'home':
+        initHomeScrollSnap();
+        break;
+      case 'skills':
+        initSkillBars();
+        break;
+      case 'blog':
+        initBlogPage();
+        break;
+    }
+    initTimelineVisibility();
+    initFadeObserver();
+  }
+
+  // =========================================================
+  // Scroll Snap Dot Indicator (Home Page)
+  // =========================================================
+  function initHomeScrollSnap() {
+    const snapWrapper = document.getElementById('home-snap');
+    if (!snapWrapper) return;
+
+    const sections = snapWrapper.querySelectorAll('.snap-section');
+    scrollIndicator.innerHTML = '';
+
+    sections.forEach((section, idx) => {
+      const dot = document.createElement('div');
+      dot.className = 'scroll-dot' + (idx === 0 ? ' active' : '');
+      dot.setAttribute('title', section.id || `섹션 ${idx + 1}`);
+      dot.addEventListener('click', () => {
+        section.scrollIntoView({ behavior: 'smooth' });
+      });
+      scrollIndicator.appendChild(dot);
+    });
+
+    // Update active dot on scroll
+    const dots = scrollIndicator.querySelectorAll('.scroll-dot');
+    snapWrapper.addEventListener('scroll', () => {
+      const scrollTop = snapWrapper.scrollTop;
+      const sectionHeight = snapWrapper.clientHeight;
+      const activeIdx = Math.round(scrollTop / sectionHeight);
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === activeIdx);
+      });
+    }, { passive: true });
+
+    scrollIndicator.style.display = 'flex';
+  }
+
+  // =========================================================
+  // Skill Bars Animation
+  // =========================================================
+  function initSkillBars() {
+    const fills = document.querySelectorAll('.skill-bar-fill');
+    if (!fills.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const fill = entry.target;
+          const width = parseFloat(fill.dataset.width || 0.5);
+          fill.style.transform = `scaleX(${width})`;
+          fill.classList.add('animate');
+          observer.unobserve(fill);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    fills.forEach(fill => observer.observe(fill));
+  }
+
+  // =========================================================
+  // Timeline Visibility Animation
+  // =========================================================
+  function initTimelineVisibility() {
+    const items = document.querySelectorAll('.timeline-item');
+    if (!items.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, idx) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, idx * 100);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    items.forEach(item => {
+      item.classList.remove('visible');
+      observer.observe(item);
+    });
+  }
+
+  // =========================================================
+  // Fade-in observer for .fade-in elements
+  // =========================================================
+  function initFadeObserver() {
+    const fadeEls = document.querySelectorAll(
+      '.fade-in-delay-1, .fade-in-delay-2, .fade-in-delay-3, .fade-in-delay-4, .fade-in-delay-5'
+    );
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeEls.forEach(el => {
+      el.style.animationPlayState = 'paused';
+      observer.observe(el);
+    });
+  }
+
+  // =========================================================
+  // Blog Page — Post List & Viewer
+  // =========================================================
+  async function initBlogPage() {
+    const postList = document.getElementById('post-list');
+    const blogEmpty = document.getElementById('blog-empty');
+    const markdownBody = document.getElementById('markdown-body');
+    if (!postList || !blogEmpty || !markdownBody) return;
+
+    // Fetch post index
+    let posts = [];
+    try {
+      const res = await fetch('posts/index.json');
+      const data = await res.json();
+      posts = data.posts || [];
+    } catch (_) {
+      postList.innerHTML = '<p style="color:var(--text-muted);padding:20px 0;font-size:0.875rem;">포스트 목록을 불러올 수 없습니다.<br>로컬 서버가 필요합니다.</p>';
+      return;
+    }
+
+    // Render post list
+    postList.innerHTML = posts.map(post => `
+      <div class="post-list-item" data-id="${post.id}" data-file="${post.file}" onclick="window.Blog.openPost('${post.id}', '${post.file}')">
+        <p class="post-item-date">${formatDate(post.date)}</p>
+        <p class="post-item-title">${post.title}</p>
+        <div class="post-item-tags">
+          ${(post.tags || []).map(tag => `<span class="post-item-tag">${tag}</span>`).join('')}
+        </div>
+      </div>
+    `).join('');
+
+    // Auto-open first post
+    if (posts.length > 0) {
+      openPost(posts[0].id, posts[0].file, postList, blogEmpty, markdownBody);
+    }
+  }
+
+  async function openPost(postId, filePath, listEl, emptyEl, bodyEl) {
+    // If called from global scope, re-query
+    listEl   = listEl   || document.getElementById('post-list');
+    emptyEl  = emptyEl  || document.getElementById('blog-empty');
+    bodyEl   = bodyEl   || document.getElementById('markdown-body');
+    if (!listEl || !emptyEl || !bodyEl) return;
+
+    state.currentPostId = postId;
+
+    // Highlight active item
+    listEl.querySelectorAll('.post-list-item').forEach(item => {
+      item.classList.toggle('active', item.dataset.id === postId);
+    });
+
+    // Show markdown body
+    emptyEl.style.display = 'none';
+    bodyEl.style.display = 'block';
+    bodyEl.innerHTML = '<div style="color:var(--text-muted);padding:20px 0;">불러오는 중...</div>';
+
+    // Render
+    await window.MarkdownRenderer.renderMarkdown(filePath, bodyEl);
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+  }
+
+  // =========================================================
+  // Navbar scroll effect
+  // =========================================================
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 30);
+  }, { passive: true });
+
+  // =========================================================
+  // Hamburger
+  // =========================================================
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+
+  // =========================================================
+  // Nav Links click
+  // =========================================================
+  navLinks.addEventListener('click', (e) => {
+    const link = e.target.closest('.nav-link');
+    if (!link) return;
+    e.preventDefault();
+    const pageName = link.dataset.page;
+    if (pageName) navigate(pageName);
+  });
+
+  // Nav logo → home
+  document.getElementById('nav-logo-btn').addEventListener('click', (e) => {
+    e.preventDefault();
+    navigate('home');
+  });
+
+  // =========================================================
+  // Public API
+  // =========================================================
+  window.Blog = {
+    navigate,
+    openPost: (postId, filePath) => openPost(postId, filePath),
+  };
+
+  // =========================================================
+  // Initial Load
+  // =========================================================
+  async function init() {
+    showLoader();
+
+    try {
+      const response = await fetch('pages/home.html');
+      if (!response.ok) throw new Error('Cannot load home.html');
+      const html = await response.text();
+      pageContainer.innerHTML = html;
+      afterNavigate('home');
+    } catch (err) {
+      console.error('Init failed:', err);
+      pageContainer.innerHTML = `
+        <div style="min-height:80vh;display:flex;align-items:center;justify-content:center;flex-direction:column;color:var(--text-muted);gap:12px;">
+          <div style="font-size:4rem;">🚀</div>
+          <h2 style="color:var(--accent-cyan);">블로그를 시작하려면 로컬 서버가 필요합니다</h2>
+          <p>터미널에서 아래 명령어를 실행하세요:</p>
+          <code style="background:rgba(0,212,255,0.08);padding:12px 24px;border-radius:8px;color:var(--accent-cyan);font-size:1.1rem;">
+            python -m http.server 8080
+          </code>
+          <p style="margin-top:8px;">그 다음 <code style="color:var(--accent-cyan)">http://localhost:8080</code> 에서 확인하세요</p>
+        </div>
+      `;
+    } finally {
+      setTimeout(hideLoader, 300);
+    }
+  }
+
+  // DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();

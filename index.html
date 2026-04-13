@@ -1,1 +1,64 @@
-hi
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>경동훈 | IT Engineer & Developer</title>
+  <meta name="description" content="간호사에서 보안을 거쳐 전산 관리 개발자까지 — 경동훈의 포트폴리오 블로그입니다." />
+  <meta name="keywords" content="경동훈, Flutter, 개발자, 보안, 서버관리, 포트폴리오" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@200;400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Marked.js (Markdown Parser) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/sections.css" />
+  <link rel="stylesheet" href="styles/responsive.css" />
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="navbar" class="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#" id="nav-logo-btn">
+        <span class="logo-bracket">&lt;</span>KDH<span class="logo-bracket">/&gt;</span>
+      </a>
+      <button class="hamburger" id="hamburger-btn" aria-label="메뉴 열기">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#" class="nav-link active" data-page="home">홈</a></li>
+        <li><a href="#" class="nav-link" data-page="greeting">인삿말</a></li>
+        <li><a href="#" class="nav-link" data-page="skills">기술현황</a></li>
+        <li><a href="#" class="nav-link" data-page="projects">프로젝트</a></li>
+        <li><a href="#" class="nav-link" data-page="blog">블로그</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== PAGE CONTAINER ===== -->
+  <main id="page-container">
+    <!-- Home page loads by default -->
+  </main>
+
+  <!-- ===== SCROLL DOT INDICATOR ===== -->
+  <div class="scroll-indicator" id="scroll-indicator"></div>
+
+  <!-- ===== LOADING OVERLAY ===== -->
+  <div class="page-loader" id="page-loader">
+    <div class="loader-ring"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/markdown.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
