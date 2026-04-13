@@ -290,6 +290,41 @@
   });
 
   // =========================================================
+  // Rainbow Sparkle Particle Effect 
+  // =========================================================
+  const sparkleColors = ['#00d4ff', '#7c3aed', '#ec4899', '#10b981', '#ffdeeb', '#fbbf24'];
+  let lastSparkleTime = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    const now = Date.now();
+    if (now - lastSparkleTime < 40) return; // limit to ~25 particles/sec
+    lastSparkleTime = now;
+
+    const sparkle = document.createElement('div');
+    sparkle.className = 'rainbow-sparkle';
+    
+    const color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+    sparkle.style.backgroundColor = color;
+    sparkle.style.boxShadow = `0 0 6px ${color}`;
+    
+    const size = Math.random() * 5 + 3; // 3px ~ 8px
+    sparkle.style.width = `${size}px`;
+    sparkle.style.height = `${size}px`;
+    
+    const offsetX = (Math.random() - 0.5) * 15;
+    const offsetY = (Math.random() - 0.5) * 10;
+    
+    sparkle.style.left = `${e.clientX + offsetX}px`;
+    sparkle.style.top = `${e.clientY + offsetY + 15}px`; 
+    
+    document.body.appendChild(sparkle);
+    
+    setTimeout(() => {
+      sparkle.remove();
+    }, 1000); // matches CSS animation duration
+  }, { passive: true });
+
+  // =========================================================
   // Public API
   // =========================================================
   window.Blog = {

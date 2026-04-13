@@ -76,16 +76,29 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* 커스텀 동물 포인터 적용 (기본: 강아지) */
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size: 24px"><text y="24">🐱</text></svg>'), auto;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size: 24px"><text y="24">🐾</text></svg>'), pointer;
 }
 
 ul, ol { list-style: none; }
 img { max-width: 100%; display: block; }
-button { cursor: pointer; border: none; background: none; font-family: inherit; }
+button { 
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size: 24px"><text y="24">🐾</text></svg>'), pointer; 
+  border: none; 
+  background: none; 
+  font-family: inherit; 
+}
+
+/* 추가적으로 pointer 속성을 가지는 요소들을 위해 발바닥 커서 강제 적용 */
+.scroll-dot, .scroll-hint, .post-list-item, .highlight-phrase {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size: 24px"><text y="24">🐾</text></svg>'), pointer !important;
+}
 
 /* ---- Scrollbar ---- */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -470,3 +483,18 @@ h1, h2, h3, h4, h5, h6 {
 .pill-purple { border-color: var(--accent-purple); color: var(--accent-purple); }
 .pill-green { border-color: var(--accent-green); color: var(--accent-green); }
 .pill-pink { border-color: var(--accent-pink); color: var(--accent-pink); }
+
+/* ---- Rainbow Sparkle ---- */
+.rainbow-sparkle {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  filter: blur(1px);
+  animation: fallDown 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes fallDown {
+  0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.9; }
+  100% { transform: translateY(80px) scale(0) rotate(180deg); opacity: 0; }
+}
