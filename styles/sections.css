@@ -17,6 +17,14 @@
   align-items: center;
   width: 100%;
 }
+/* hero 영역 전반 텍스트 색상 보장 */
+.hero-section,
+.greeting-hero,
+.skills-hero,
+.projects-hero,
+.blog-hero {
+  color: var(--text-primary);
+}
 .hero-eyebrow {
   font-family: 'Outfit', sans-serif;
   font-size: var(--fs-sm);
@@ -287,7 +295,7 @@
 }
 .greeting-hero {
   background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-  padding: 40px 0 32px;
+  padding: 20px 0 16px;
   display: flex;
   align-items: center;
 }
@@ -298,6 +306,7 @@
   line-height: 1.35;
   max-width: 800px;
   margin-bottom: 24px;
+  color: var(--text-primary);
 }
 .career-path {
   display: flex;
@@ -382,7 +391,7 @@
   min-height: 100vh;
 }
 .skills-hero {
-  padding: 32px 0 24px;
+  padding: 20px 0 16px;
   background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
 }
 .skills-hero .container { width: 100%; }
@@ -521,7 +530,7 @@
   padding-bottom: 80px;
 }
 .projects-hero {
-  padding: 32px 0 24px;
+  padding: 20px 0 16px;
   background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
 }
 .projects-hero .container { width: 100%; }
@@ -651,7 +660,7 @@
   padding-bottom: 80px;
 }
 .blog-hero {
-  padding: 32px 0 24px;
+  padding: 20px 0 16px;
   background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
 }
 .blog-hero .container { width: 100%; }

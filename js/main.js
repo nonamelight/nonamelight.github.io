@@ -181,21 +181,13 @@
   // Fade-in observer for .fade-in elements
   // =========================================================
   function initFadeObserver() {
+    // 애니메이션을 멈추지 않고 바로 실행 — paused 처리 시 IntersectionObserver 타이밍 이슈 발생
+    // CSS animation-delay가 자연스럽게 순차 표시를 담당
     const fadeEls = document.querySelectorAll(
       '.fade-in-delay-1, .fade-in-delay-2, .fade-in-delay-3, .fade-in-delay-4, .fade-in-delay-5'
     );
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
     fadeEls.forEach(el => {
-      el.style.animationPlayState = 'paused';
-      observer.observe(el);
+      el.style.animationPlayState = 'running';
     });
   }
 
