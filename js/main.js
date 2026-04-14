@@ -325,6 +325,16 @@
   }, { passive: true });
 
   // =========================================================
+  // Mouse Click Enlarge Cursor Effect
+  // =========================================================
+  window.addEventListener('mousedown', () => {
+    document.body.classList.add('mouse-down');
+  });
+  window.addEventListener('mouseup', () => {
+    document.body.classList.remove('mouse-down');
+  });
+
+  // =========================================================
   // Public API
   // =========================================================
   window.Blog = {

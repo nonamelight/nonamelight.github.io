@@ -4,39 +4,39 @@
 
 /* ---- CSS Variables ---- */
 :root {
-  --bg-primary: #070b14;
-  --bg-secondary: #0d1220;
-  --bg-card: rgba(255, 255, 255, 0.04);
-  --bg-card-hover: rgba(255, 255, 255, 0.08);
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-card: rgba(241, 245, 249, 0.6);
+  --bg-card-hover: rgba(241, 245, 249, 0.9);
 
-  --accent-cyan: #00d4ff;
+  --accent-cyan: #0284c7;
   --accent-purple: #7c3aed;
-  --accent-pink: #ec4899;
-  --accent-green: #10b981;
+  --accent-pink: #db2777;
+  --accent-green: #059669;
 
-  --gradient-main: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);
-  --gradient-warm: linear-gradient(135deg, #ec4899 0%, #7c3aed 100%);
-  --gradient-text: linear-gradient(135deg, #00d4ff, #7c3aed, #ec4899);
+  --gradient-main: linear-gradient(135deg, #38bdf8 0%, #a78bfa 100%);
+  --gradient-warm: linear-gradient(135deg, #f472b6 0%, #a78bfa 100%);
+  --gradient-text: linear-gradient(135deg, #0284c7, #7c3aed, #db2777);
 
-  --text-primary: #f0f4ff;
-  --text-secondary: #8b9bc8;
-  --text-muted: #4a5568;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
 
-  --border-subtle: rgba(255, 255, 255, 0.07);
-  --border-accent: rgba(0, 212, 255, 0.3);
+  --border-subtle: #cbd5e1;
+  --border-accent: rgba(2, 132, 199, 0.3);
 
-  --glass-bg: rgba(13, 18, 32, 0.7);
-  --glass-blur: blur(20px);
-  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-blur: blur(16px);
+  --glass-border: 1px solid rgba(203, 213, 225, 0.5);
 
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
   --radius-xl: 40px;
 
-  --shadow-glow-cyan: 0 0 30px rgba(0, 212, 255, 0.2);
-  --shadow-glow-purple: 0 0 30px rgba(124, 58, 237, 0.2);
-  --shadow-card: 0 8px 40px rgba(0, 0, 0, 0.4);
+  --shadow-glow-cyan: 0 4px 20px rgba(2, 132, 199, 0.15);
+  --shadow-glow-purple: 0 4px 20px rgba(124, 58, 237, 0.15);
+  --shadow-card: 0 8px 30px rgba(100, 116, 139, 0.1);
 
   --nav-height: 64px;
   --transition-fast: 0.2s ease;
@@ -162,8 +162,8 @@ h1, h2, h3, h4, h5, h6 {
   transition: background var(--transition-med);
 }
 .navbar.scrolled {
-  background: rgba(7, 11, 20, 0.95);
-  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
 .nav-inner {
@@ -344,6 +344,7 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--accent-cyan);
+  background: rgba(2, 132, 199, 0.08);
   padding: 6px 14px;
   border: 1px solid var(--border-accent);
   border-radius: 20px;
@@ -444,7 +445,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 600px;
   height: 600px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, transparent 70%);
   top: -100px;
   right: -100px;
   animation: float1 8s ease-in-out infinite;
@@ -455,7 +456,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.12) 0%, transparent 70%);
   bottom: -100px;
   left: -100px;
   animation: float2 10s ease-in-out infinite;
@@ -477,12 +478,12 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Outfit', sans-serif;
   font-size: var(--fs-xs);
   font-weight: 600;
-  border: 1px solid;
+  border: 1px solid transparent;
 }
-.pill-cyan { border-color: var(--accent-cyan); color: var(--accent-cyan); }
-.pill-purple { border-color: var(--accent-purple); color: var(--accent-purple); }
-.pill-green { border-color: var(--accent-green); color: var(--accent-green); }
-.pill-pink { border-color: var(--accent-pink); color: var(--accent-pink); }
+.pill-cyan { background: rgba(2, 132, 199, 0.08); border-color: rgba(2, 132, 199, 0.2); color: var(--accent-cyan); }
+.pill-purple { background: rgba(124, 58, 237, 0.08); border-color: rgba(124, 58, 237, 0.2); color: var(--accent-purple); }
+.pill-green { background: rgba(5, 150, 105, 0.08); border-color: rgba(5, 150, 105, 0.2); color: var(--accent-green); }
+.pill-pink { background: rgba(219, 39, 119, 0.08); border-color: rgba(219, 39, 119, 0.2); color: var(--accent-pink); }
 
 /* ---- Rainbow Sparkle ---- */
 .rainbow-sparkle {
@@ -497,4 +498,17 @@ h1, h2, h3, h4, h5, h6 {
 @keyframes fallDown {
   0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.9; }
   100% { transform: translateY(80px) scale(0) rotate(180deg); opacity: 0; }
+}
+
+/* ---- Cursor Mouse Down Enlargement ---- */
+body.mouse-down {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" style="font-size: 48px"><text y="48">🐱</text></svg>'), auto !important;
+}
+body.mouse-down a, 
+body.mouse-down button, 
+body.mouse-down .scroll-dot, 
+body.mouse-down .scroll-hint, 
+body.mouse-down .post-list-item, 
+body.mouse-down .highlight-phrase {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" style="font-size: 48px"><text y="48">🐾</text></svg>'), pointer !important;
 }
