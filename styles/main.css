@@ -513,8 +513,8 @@ body.mouse-down .highlight-phrase {
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" style="font-size: 48px"><text y="48">🐾</text></svg>'), pointer !important;
 }
 
-/* ---- Cherry Blossom Animation ---- */
-#cherry-blossom-container {
+/* ---- Particle Animation (Cherry & Leaves) ---- */
+#particle-container {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -533,6 +533,49 @@ body.mouse-down .highlight-phrase {
   box-shadow: 0 0 10px rgba(255, 182, 193, 0.4);
   animation: petalFall linear forwards;
   pointer-events: none;
+}
+
+.green-leaf {
+  position: absolute;
+  background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+  border-radius: 20px 0 20px 0;
+  opacity: 0;
+  box-shadow: 0 0 12px rgba(168, 230, 207, 0.4);
+  animation: petalFall linear forwards;
+  pointer-events: none;
+}
+
+.maple-leaf {
+  position: absolute;
+  background: linear-gradient(135deg, #fcd34d, #f97316, #ef4444);
+  border-radius: 20px 0 20px 0;
+  opacity: 0;
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
+  animation: petalFall linear forwards;
+  pointer-events: none;
+}
+
+.snow-circle {
+  position: absolute;
+  background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0 0 8px rgba(186, 230, 253, 0.6);
+  animation: petalFall linear forwards;
+  pointer-events: none;
+}
+
+.snow-crystal {
+  position: absolute;
+  color: #bae6fd;
+  text-shadow: 0 0 10px rgba(186, 230, 253, 0.8);
+  font-family: sans-serif;
+  opacity: 0;
+  animation: petalFall linear forwards;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes petalFall {

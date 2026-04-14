@@ -82,20 +82,27 @@
   // After Navigate — per-page init hooks
   // =========================================================
   function afterNavigate(pageName) {
-    if (window.cherryInterval) {
-      clearInterval(window.cherryInterval);
-      window.cherryInterval = null;
-      const oldWrapper = document.getElementById('cherry-blossom-container');
+    if (window.particleInterval) {
+      clearInterval(window.particleInterval);
+      window.particleInterval = null;
+      const oldWrapper = document.getElementById('particle-container');
       if (oldWrapper) oldWrapper.remove();
     }
     
     switch (pageName) {
       case 'home':
         initHomeScrollSnap();
-        initCherryBlossoms();
+        initParticles('cherry');
+        break;
+      case 'greeting':
+        initParticles('leaf');
         break;
       case 'skills':
         initSkillBars();
+        initParticles('maple');
+        break;
+      case 'projects':
+        initParticles('snow');
         break;
       case 'blog':
         initBlogPage();
@@ -106,56 +113,81 @@
   }
 
   // =========================================================
-  // Cherry Blossom Animation
+  // Particle Animation (Cherry / Leaves / Maple / Snow)
   // =========================================================
-  function initCherryBlossoms() {
-    let wrapper = document.getElementById('cherry-blossom-container');
+  function initParticles(type) {
+    let wrapper = document.getElementById('particle-container');
     if (!wrapper) {
       wrapper = document.createElement('div');
-      wrapper.id = 'cherry-blossom-container';
+      wrapper.id = 'particle-container';
       document.body.appendChild(wrapper);
     }
 
-    // 초기 꽃잎 생성 (자연스러운 배치를 위해)
+    // 초기 입자 생성 (자연스러운 배치를 위해)
     for (let i = 0; i < 12; i++) {
-      setTimeout(() => createPetal(wrapper), Math.random() * 2000);
+      setTimeout(() => createParticle(wrapper, type), Math.random() * 2000);
     }
 
-    window.cherryInterval = setInterval(() => {
-      createPetal(wrapper);
+    window.particleInterval = setInterval(() => {
+      createParticle(wrapper, type);
     }, 400); // 0.4초마다 하나씩 생성
   }
 
-  function createPetal(wrapper) {
+  function createParticle(wrapper, type) {
     if (!wrapper || !wrapper.parentNode) return;
-    const petal = document.createElement('div');
-    petal.className = 'cherry-petal';
+    const particle = document.createElement('div');
+    
+    let sizeMultiplier = 1;
+    if (type === 'leaf') {
+      particle.className = 'green-leaf';
+      sizeMultiplier = 2;
+    } else if (type === 'maple') {
+      particle.className = 'maple-leaf';
+      sizeMultiplier = 1.5;
+    } else if (type === 'snow') {
+      if (Math.random() > 0.85) {
+        particle.className = 'snow-crystal';
+        particle.innerHTML = '❄️';
+        sizeMultiplier = 1.8;
+      } else {
+        particle.className = 'snow-circle';
+        sizeMultiplier = 0.8;
+      }
+    } else {
+      particle.className = 'cherry-petal';
+    }
 
-    const size = Math.random() * 6 + 8; // 8px ~ 14px
-    petal.style.width = `${size}px`;
-    petal.style.height = `${size}px`;
+    const baseSize = Math.random() * 6 + 8; // 8px ~ 14px
+    const size = baseSize * sizeMultiplier;
+    
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    if (type === 'snow' && particle.className === 'snow-crystal') {
+      particle.style.fontSize = `${size}px`;
+      particle.style.lineHeight = `${size}px`;
+    }
 
     // 우측 영역(40%~120%)에서 시작해 왼쪽으로 부드럽게 흩날리도록 
     const startX = window.innerWidth * 0.4 + Math.random() * (window.innerWidth * 0.8);
     const startY = -(Math.random() * 60 + 20); // 위쪽에서 살짝 가려진 상태로 시작
 
-    petal.style.left = `${startX}px`;
-    petal.style.top = `${startY}px`;
+    particle.style.left = `${startX}px`;
+    particle.style.top = `${startY}px`;
 
     const duration = Math.random() * 5 + 7; // 7초 ~ 12초
-    petal.style.animationDuration = `${duration}s`;
+    particle.style.animationDuration = `${duration}s`;
 
     // 왼쪽 방향과 아래 방향 이동 거리 설정
     const fallX = -(Math.random() * 400 + 300); // 왼쪽으로 300px~700px
     const fallY = wrapper.clientHeight + 50; 
 
-    petal.style.setProperty('--fall-x', `${fallX}px`);
-    petal.style.setProperty('--fall-y', `${fallY}px`);
-    petal.style.setProperty('--rot', `${Math.random() * 360 + 180}deg`);
+    particle.style.setProperty('--fall-x', `${fallX}px`);
+    particle.style.setProperty('--fall-y', `${fallY}px`);
+    particle.style.setProperty('--rot', `${Math.random() * 360 + 180}deg`);
 
-    wrapper.appendChild(petal);
+    wrapper.appendChild(particle);
     setTimeout(() => {
-      if (petal.parentNode) petal.remove();
+      if (particle.parentNode) particle.remove();
     }, duration * 1000);
   }
 
