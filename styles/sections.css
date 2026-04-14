@@ -779,8 +779,8 @@
   color: var(--accent-cyan);
 }
 .markdown-body pre {
-  background: #0d1117;
-  border: 1px solid var(--border-subtle);
+  background: rgba(2, 132, 199, 0.04);
+  border: 1px solid rgba(2, 132, 199, 0.15);
   border-radius: var(--radius-sm);
   padding: 20px;
   overflow-x: auto;
@@ -790,7 +790,7 @@
   background: none;
   border: none;
   padding: 0;
-  color: inherit;
+  color: var(--text-secondary);
   font-size: var(--fs-sm);
 }
 .markdown-body blockquote {
