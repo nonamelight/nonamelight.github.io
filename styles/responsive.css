@@ -91,7 +91,14 @@
   .hero-info-card {
     padding: 24px;
   }
-  .info-grid { gap: 10px 16px; }
+  .hero-profile-image {
+    top: 24px;
+    right: 24px;
+    width: 70px;
+    height: 95px;
+    border-width: 2px;
+  }
+  .info-grid { gap: 10px 16px; padding-right: 80px; }
 
   /* Career Path */
   .career-path { gap: 4px; }
