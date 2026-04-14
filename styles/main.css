@@ -512,3 +512,38 @@ body.mouse-down .post-list-item,
 body.mouse-down .highlight-phrase {
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" style="font-size: 48px"><text y="48">🐾</text></svg>'), pointer !important;
 }
+
+/* ---- Cherry Blossom Animation ---- */
+#cherry-blossom-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 60vh; /* 하단 60% 영역에서만 나타남 */
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 99; /* 콘텐츠 위 플로팅 (버튼 클릭 방해 안함) */
+}
+
+.cherry-petal {
+  position: absolute;
+  background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+  border-radius: 15px 0 15px 0;
+  opacity: 0;
+  box-shadow: 0 0 10px rgba(255, 182, 193, 0.4);
+  animation: petalFall linear forwards;
+  pointer-events: none;
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  15% { opacity: 0.8; }
+  85% { opacity: 0.8; }
+  100% {
+    transform: translate(var(--fall-x), var(--fall-y)) rotate(var(--rot));
+    opacity: 0;
+  }
+}

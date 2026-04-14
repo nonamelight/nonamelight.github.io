@@ -82,9 +82,17 @@
   // After Navigate — per-page init hooks
   // =========================================================
   function afterNavigate(pageName) {
+    if (window.cherryInterval) {
+      clearInterval(window.cherryInterval);
+      window.cherryInterval = null;
+      const oldWrapper = document.getElementById('cherry-blossom-container');
+      if (oldWrapper) oldWrapper.remove();
+    }
+    
     switch (pageName) {
       case 'home':
         initHomeScrollSnap();
+        initCherryBlossoms();
         break;
       case 'skills':
         initSkillBars();
@@ -95,6 +103,60 @@
     }
     initTimelineVisibility();
     initFadeObserver();
+  }
+
+  // =========================================================
+  // Cherry Blossom Animation
+  // =========================================================
+  function initCherryBlossoms() {
+    let wrapper = document.getElementById('cherry-blossom-container');
+    if (!wrapper) {
+      wrapper = document.createElement('div');
+      wrapper.id = 'cherry-blossom-container';
+      document.body.appendChild(wrapper);
+    }
+
+    // 초기 꽃잎 생성 (자연스러운 배치를 위해)
+    for (let i = 0; i < 12; i++) {
+      setTimeout(() => createPetal(wrapper), Math.random() * 2000);
+    }
+
+    window.cherryInterval = setInterval(() => {
+      createPetal(wrapper);
+    }, 400); // 0.4초마다 하나씩 생성
+  }
+
+  function createPetal(wrapper) {
+    if (!wrapper || !wrapper.parentNode) return;
+    const petal = document.createElement('div');
+    petal.className = 'cherry-petal';
+
+    const size = Math.random() * 6 + 8; // 8px ~ 14px
+    petal.style.width = `${size}px`;
+    petal.style.height = `${size}px`;
+
+    // 우측 영역(40%~120%)에서 시작해 왼쪽으로 부드럽게 흩날리도록 
+    const startX = window.innerWidth * 0.4 + Math.random() * (window.innerWidth * 0.8);
+    const startY = -(Math.random() * 60 + 20); // 위쪽에서 살짝 가려진 상태로 시작
+
+    petal.style.left = `${startX}px`;
+    petal.style.top = `${startY}px`;
+
+    const duration = Math.random() * 5 + 7; // 7초 ~ 12초
+    petal.style.animationDuration = `${duration}s`;
+
+    // 왼쪽 방향과 아래 방향 이동 거리 설정
+    const fallX = -(Math.random() * 400 + 300); // 왼쪽으로 300px~700px
+    const fallY = wrapper.clientHeight + 50; 
+
+    petal.style.setProperty('--fall-x', `${fallX}px`);
+    petal.style.setProperty('--fall-y', `${fallY}px`);
+    petal.style.setProperty('--rot', `${Math.random() * 360 + 180}deg`);
+
+    wrapper.appendChild(petal);
+    setTimeout(() => {
+      if (petal.parentNode) petal.remove();
+    }, duration * 1000);
   }
 
   // =========================================================
